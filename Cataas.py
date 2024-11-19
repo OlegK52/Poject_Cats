@@ -3,6 +3,21 @@ from PIL import Image, ImageTk
 import requests
 from io import BytesIO
 
+from urllib3 import request
+
+
+def load_image():
+    try:
+        responce = requests.get(url)
+        responce.raise_for_status()
+        image_data = BytesIO(responce.content)
+        img Image.open(image_data)
+        return ImageTk.PhotoImage(img)
+    except Exception as e:
+        print(f"Произошла ошибка {e}")
+        return None
+
+
 window = Tk()
 window.title("Cats!")
 window.geometry("600x480")
